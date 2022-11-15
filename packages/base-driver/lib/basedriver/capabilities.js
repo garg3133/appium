@@ -16,11 +16,11 @@ const PREFIXED_APPIUM_OPTS_CAP = `${APPIUM_VENDOR_PREFIX}${APPIUM_OPTS_CAP}`;
  * @template {Constraints} [U={}]
  * @param {Capabilities<T>} [primary]
  * @param {Capabilities<U>} [secondary]
- * @returns {import('type-fest').Merge<Capabilities<T>, Capabilities<U>>}
+ * @returns {Merge<Capabilities<T>, Capabilities<U>>}
  * @see https://www.w3.org/TR/webdriver/#dfn-merging-capabilities)
  */
 function mergeCaps(primary = {}, secondary = {}) {
-  let result = /** @type {import('type-fest').Merge<Capabilities<T>, Capabilities<U>>} */ ({
+  let result = /** @type {Merge<Capabilities<T>, Capabilities<U>>} */ ({
     ...primary,
   });
 
@@ -95,7 +95,7 @@ function validateCaps(caps, constraints = /** @type {C} */ ({}), opts = {}) {
  */
 export const STANDARD_CAPS = Object.freeze(
   new Set(
-    /** @type {import('type-fest').StringKeyOf<import('@appium/types').StandardCapabilities>[]} */ ([
+    /** @type {StringKeyOf<import('@appium/types').StandardCapabilities>[]} */ ([
       'browserName',
       'browserVersion',
       'platformName',
@@ -142,10 +142,9 @@ function stripAppiumPrefixes(caps) {
 
   // Strip out the 'appium:' prefix
   for (let prefixedCap of prefixedCaps) {
-    const strippedCapName =
-      /** @type {import('type-fest').StringKeyOf<import('@appium/types').Capabilities<C>>} */ (
-        prefixedCap.substring(APPIUM_VENDOR_PREFIX.length)
-      );
+    const strippedCapName = /** @type {StringKeyOf<import('@appium/types').Capabilities<C>>} */ (
+      prefixedCap.substring(APPIUM_VENDOR_PREFIX.length)
+    );
 
     // If it's standard capability that was prefixed, add it to an array of incorrectly prefixed capabilities
     if (isStandardCap(strippedCapName)) {
@@ -417,4 +416,13 @@ export {
  * @template {Constraints} [C=BaseDriverCapConstraints]
  * @template {StringRecord|void} [Extra=void]
  * @typedef {import('@appium/types').W3CCapabilities<C, Extra>} W3CCapabilities
+ */
+
+/**
+ * @template T,U
+ * @typedef {import('type-fest').Merge<T,U>} Merge
+ */
+/**
+ * @template T
+ * @typedef {import('type-fest').StringKeyOf<T>} StringKeyOf
  */
