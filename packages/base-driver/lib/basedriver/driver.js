@@ -56,8 +56,6 @@ export class BaseDriverCore extends DriverCore {
    */
   opts;
 
-  static BASE_DESIRED_CAP_CONSTRAINTS = BASE_DESIRED_CAP_CONSTRAINTS;
-
   /**
    *
    * @param {DriverOpts<C>} opts
@@ -71,6 +69,10 @@ export class BaseDriverCore extends DriverCore {
      * blows away {@linkcode DriverCore.opts}.
      */
     this.opts = opts;
+
+    this.caps = {};
+
+    this.cliArgs = /** @type {CArgs & ServerArgs} */ ({});
   }
 
   /**
