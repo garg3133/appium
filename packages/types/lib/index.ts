@@ -1,19 +1,18 @@
-import type {Server as WSServer} from 'ws';
-import type {Socket} from 'net';
-import type {Server} from 'http';
-import type {Class as _Class, ConditionalPick, MultidimensionalReadonlyArray} from 'type-fest';
-import {ServerArgs} from './config';
 import type {Express} from 'express';
-import {Driver, ExternalDriver} from './driver';
+import type {Server} from 'http';
+import type {Socket} from 'net';
 import type {Logger} from 'npmlog';
+import type {Class as _Class, ConditionalPick, MultidimensionalReadonlyArray} from 'type-fest';
+import type {Server as WSServer} from 'ws';
+import {ServerArgs} from './config';
 
-export * from './driver';
 export * from './action';
-export * from './plugin';
-export * from './capabilities';
-export * from './constraints';
-export * from './config';
 export * from './appium-config';
+export * from './capabilities';
+export * from './config';
+export * from './constraints';
+export * from './driver';
+export * from './plugin';
 
 /**
  * Utility type for a object with string-only props
@@ -82,11 +81,11 @@ export interface AppiumServerSocket extends Socket {
  * The definition of an extension method, which will be provided via Appium's API.
  *
  */
-export interface MethodDef<E> {
+export interface MethodDef<Ext> {
   /**
    * Name of the command.
    */
-  readonly command?: keyof ConditionalPick<Required<E>, DriverCommand>;
+  readonly command?: keyof ConditionalPick<Required<Ext>, DriverCommand>;
   /**
    * If true, this `Method` will never proxy.
    */
@@ -118,13 +117,13 @@ export interface PayloadParams {
 /**
  * A mapping of URL paths to HTTP methods to {@linkcode MethodDef}s.
  */
-export type MethodMap<E = any> = Readonly<
+export type MethodMap<Ext = any> = Readonly<
   Record<
     string,
     {
-      GET?: MethodDef<E>;
-      POST?: MethodDef<E>;
-      DELETE?: MethodDef<E>;
+      GET?: MethodDef<Ext>;
+      POST?: MethodDef<Ext>;
+      DELETE?: MethodDef<Ext>;
     }
   >
 >;
